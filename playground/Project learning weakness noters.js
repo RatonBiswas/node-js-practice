@@ -1,0 +1,5 @@
+split()
+map()
+indexof()
+include()
+filter()
