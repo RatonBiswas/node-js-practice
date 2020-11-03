@@ -1,10 +1,12 @@
-
 import React from 'react'
-const userOutput =()=>{
+import './UserOutput.css'
+const userOutput =(props)=>{
     return(
-        <div>
-            <p>Some random text</p>
+        <div className="UserOutput">
+            <p>username :{props.userName}</p>
             <p>I hope i'll be overwritten</p>
         </div>
     )
 }
+
+export default userOutput
