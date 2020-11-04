@@ -27,13 +27,13 @@
 //   };
 
 // const nameChangedHandler =(event) => {
-//   setPersonsState({
-//     persons: [
-//       { name: 'RATON', age: 21 },
-//       { name: event.target.value, age: 22 },
-//       { name: "Sibli", age: 2 },
-//     ],
-//   });
+  // setPersonsState({
+  //   persons: [
+  //     { name: 'RATON', age: 21 },
+  //     { name: event.target.value, age: 22 },
+  //     { name: "Sibli", age: 2 },
+  //   ],
+  // });
 // }
 // const taggleNameHandler = ()=> {
 //   const doesShow = personsState.showPersons;
@@ -87,13 +87,30 @@ import Person from "./Person/Person";
 class App extends Component {
   state = {
     persons: [
-      { name: "raton", age: 21 },
-      { name: "Nana", age: 22 },
-      { name: "Sibli", age: 23 },
+      { id:'a1', name: "raton", age: 21 },
+      { id:'a2', name: "Nana", age: 22 },
+      { id:'a3', name: "Sibli", age: 23 },
     ],
     otherStates: "some other state",
     showPersons: false,
   };
+  nameChangedHandler = (event,id) => {
+    const personIndex = this.state.persons.findIndex(p=>{
+      return p.id ===id
+    })
+    const person ={
+      // spread operator
+      ...this.state.persons[personIndex]
+    }
+
+    person.name = event.target.value; // updated person
+    const persons = [...this.state.persons]; // spread operator to pass the value in jsx because persons in an object
+    persons[personIndex] = person; // update personIndex from person 
+    // alternative => without spread operator in the bellow
+    // const person = Object.assign({},this.state.persons[personIndex])
+
+    this.setState({persons: persons});
+  }
 
   switchNameHandler = (newName) => {
     this.setState({
@@ -130,7 +147,10 @@ class App extends Component {
       persons = (
         <div>
           {this.state.persons.map((person,index) =>{
-            return <Person name={person.name} age={person.age} click={()=> this.deleteHandler(index)}/>
+            // Each child in a list should have a unique "key" prop 
+            return <Person key={person.id} name={person.name} age={person.age} 
+            click={()=> this.deleteHandler(index)}
+            changed={(event)=>this.nameChangedHandler(event,person.id)}/>
           })}
           
         </div>
