@@ -80,95 +80,135 @@
 //     );
 //   }
 
-import React, { Component } from "react";
-import "./App.css";
-import Person from "./Person/Person";
+// import React, { Component } from "react";
+// import "./App.css";
+// import Person from "./Person/Person";
 
-class App extends Component {
-  state = {
-    persons: [
-      { id:'a1', name: "raton", age: 21 },
-      { id:'a2', name: "Nana", age: 22 },
-      { id:'a3', name: "Sibli", age: 23 },
-    ],
-    otherStates: "some other state",
-    showPersons: false,
-  };
-  nameChangedHandler = (event,id) => {
-    const personIndex = this.state.persons.findIndex(p=>{
-      return p.id ===id
-    })
-    const person ={
-      // spread operator
-      ...this.state.persons[personIndex]
-    }
+// class App extends Component {
+//   state = {
+//     persons: [
+//       { id:'a1', name: "raton", age: 21 },
+//       { id:'a2', name: "Nana", age: 22 },
+//       { id:'a3', name: "Sibli", age: 23 },
+//     ],
+//     otherStates: "some other state",
+//     showPersons: false,
+//   };
+//   nameChangedHandler = (event,id) => {
+//     const personIndex = this.state.persons.findIndex(p=>{
+//       return p.id ===id
+//     })
+//     const person ={
+//       // spread operator
+//       ...this.state.persons[personIndex]
+//     }
 
-    person.name = event.target.value; // updated person
-    const persons = [...this.state.persons]; // spread operator to pass the value in jsx because persons in an object
-    persons[personIndex] = person; // update personIndex from person 
-    // alternative => without spread operator in the bellow
-    // const person = Object.assign({},this.state.persons[personIndex])
+//     person.name = event.target.value; // updated person
+//     const persons = [...this.state.persons]; // spread operator to pass the value in jsx because persons in an object
+//     persons[personIndex] = person; // update personIndex from person 
+//     // alternative => without spread operator in the bellow
+//     // const person = Object.assign({},this.state.persons[personIndex])
 
-    this.setState({persons: persons});
-  }
+//     this.setState({persons: persons});
+//   }
 
-  switchNameHandler = (newName) => {
-    this.setState({
-      persons: [
-        { name: newName, age: 21 },
-        { name: "Nana Morningstar", age: 22 },
-        { name: "Sibli MorningStar", age: 2 },
-      ],
-    });
-  };
-  deleteHandler = (personIndex)=>{
-    const persons = this.state.persons ;
-    // remove element from array if necessary
-    persons.splice(personIndex, 1) ;
-    this.setState({persons:persons})
-  }
-  taggleNameHandler = () => {
-    const doesShow = this.state.showPersons;
-    // if doesShow was false , it will set showPersons to true .
-    this.setState({ showPersons: !doesShow });
-  };
+//   switchNameHandler = (newName) => {
+//     this.setState({
+//       persons: [
+//         { name: newName, age: 21 },
+//         { name: "Nana Morningstar", age: 22 },
+//         { name: "Sibli MorningStar", age: 2 },
+//       ],
+//     });
+//   };
+//   deleteHandler = (personIndex)=>{
+//     const persons = this.state.persons ;
+//     // remove element from array if necessary
+//     persons.splice(personIndex, 1) ;
+//     this.setState({persons:persons})
+//   }
+//   taggleNameHandler = () => {
+//     const doesShow = this.state.showPersons;
+//     // if doesShow was false , it will set showPersons to true .
+//     this.setState({ showPersons: !doesShow });
+//   };
 
-  render() {
-    const style = {
-      backgroundColor: "white",
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px",
-      cursor: "pointer",
-    };
+//   render() {
+//     const style = {
+//       backgroundColor: "white",
+//       font: "inherit",
+//       border: "1px solid blue",
+//       padding: "8px",
+//       cursor: "pointer",
+//     };
 
-    let persons = null;
-    if (this.state.showPersons) {
-      persons = (
-        <div>
-          {this.state.persons.map((person,index) =>{
-            // Each child in a list should have a unique "key" prop 
-            return <Person key={person.id} name={person.name} age={person.age} 
-            click={()=> this.deleteHandler(index)}
-            changed={(event)=>this.nameChangedHandler(event,person.id)}/>
-          })}
+//     let persons = null;
+//     if (this.state.showPersons) {
+//       persons = (
+//         <div>
+//           {this.state.persons.map((person,index) =>{
+//             // Each child in a list should have a unique "key" prop 
+//             return <Person key={person.id} name={person.name} age={person.age} 
+//             click={()=> this.deleteHandler(index)}
+//             changed={(event)=>this.nameChangedHandler(event,person.id)}/>
+//           })}
           
-        </div>
-      );
-    }
+//         </div>
+//       );
+//     }
 
+//     return (
+//       <div className="App">
+//         <h1>Hi, I'm react App.</h1>
+//         <p>How was the day!</p>
+//         <button style={style} onClick={this.taggleNameHandler}>
+//           Switch Name
+//         </button>
+//         {persons}  
+//       </div>
+//     );
+//   }
+// }
+
+// export default App;
+// export default App;
+
+
+
+
+
+// Tack session
+import React, { Component } from 'react';
+import Validation from './Validation/Validation'
+
+import Char from './Char/Char'
+class App extends Component {
+  state ={
+    userInput: '',
+  }
+
+  inputChangeHandler = (event)=>{
+    this.setState({ userInput: event.target.value})
+  }
+  deleteInputHandler = (index) =>{
+    const text = this.state.userInput.split('');
+    text.splice(index,1);
+    const updateText = text.join('');
+    this.setState({userInput: updateText})
+  }
+  render() {
+    const charlist = this.state.userInput.split('').map((ch,index)=>{
+      return <Char character={ch} key = {index} clicked={()=>this.deleteInputHandler(index)}/>
+    })
     return (
-      <div className="App">
-        <h1>Hi, I'm react App.</h1>
-        <p>How was the day!</p>
-        <button style={style} onClick={this.taggleNameHandler}>
-          Switch Name
-        </button>
-        {persons}  
+      <div>
+        <input type="text" onChange={this.inputChangeHandler } value={this.state.userInput}></input>
+        <p>{this.state.userInput}</p>
+        <Validation inputLength={this.state.userInput.length}/>
+        {charlist}
       </div>
     );
   }
 }
 
-export default App;
-// export default App;
+export default App; 
