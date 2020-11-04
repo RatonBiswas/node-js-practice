@@ -99,17 +99,17 @@ class App extends Component {
     this.setState({
       persons: [
         { name: newName, age: 21 },
-        { name: "Nana", age: 22 },
-        { name: "Sibli", age: 2 },
+        { name: "Nana Morningstar", age: 22 },
+        { name: "Sibli MorningStar", age: 2 },
       ],
     });
   };
   nameChangedHandler = (event) => {
     this.setState({
       persons: [
-        { name: "RATON", age: 21 },
+        { name: "RATON Nana", age: 21 },
         { name: event.target.value, age: 22 },
-        { name: "Sibli", age: 2 },
+        { name: "Sibli MorningStar", age: 2 },
       ],
     });
   };
@@ -132,22 +132,10 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age}
-          />
-          <Person
-            click={this.switchNameHandler.bind(this, "Lucifer")}
-            changed={this.nameChangedHandler}
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-          >
-            My Hobbies: Racing
-          </Person>
-          <Person
-            name={this.state.persons[2].name}
-            age={this.state.persons[2].age}
-          />
+          {this.state.persons.map(person =>{
+            return <Person name={person.name} age={person.age}/>
+          })}
+          
         </div>
       );
     }
@@ -159,7 +147,7 @@ class App extends Component {
         <button style={style} onClick={this.taggleNameHandler}>
           Switch Name
         </button>
-        {persons}
+        {persons}  
       </div>
     );
   }
