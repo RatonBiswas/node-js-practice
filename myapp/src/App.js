@@ -104,15 +104,12 @@ class App extends Component {
       ],
     });
   };
-  nameChangedHandler = (event) => {
-    this.setState({
-      persons: [
-        { name: "RATON Nana", age: 21 },
-        { name: event.target.value, age: 22 },
-        { name: "Sibli MorningStar", age: 2 },
-      ],
-    });
-  };
+  deleteHandler = (personIndex)=>{
+    const persons = this.state.persons ;
+    // remove element from array if necessary
+    persons.splice(personIndex, 1) ;
+    this.setState({persons:persons})
+  }
   taggleNameHandler = () => {
     const doesShow = this.state.showPersons;
     // if doesShow was false , it will set showPersons to true .
@@ -132,8 +129,8 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          {this.state.persons.map(person =>{
-            return <Person name={person.name} age={person.age}/>
+          {this.state.persons.map((person,index) =>{
+            return <Person name={person.name} age={person.age} click={()=> this.deleteHandler(index)}/>
           })}
           
         </div>
