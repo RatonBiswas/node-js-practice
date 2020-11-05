@@ -81,10 +81,28 @@
 //   }
 
 import React, { Component } from "react";
+// import Radium from "radium"
+import styled from 'styled-components'
+
+
 import "./App.css";
-import Radium from "radium"
 import Person from "./Person/Person";
 
+
+const StyledButton = styled.button`
+  background-color: ${props=> props.alt ? 'red' : 'green'}; // change any style dynamically 
+  color : white;
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  cursor: pointer;
+  
+  
+  // pseudo selector using Radium 
+  &:hover  {
+    background-color : ${props=> props.alt ? 'lightgrey' : 'lightgreen'}; 
+    color : black;
+`;
 class App extends Component {
   state = {
     persons: [
@@ -135,19 +153,9 @@ class App extends Component {
   };
 
   render() {
-    const style = {
-      backgroundColor: "green",
-      color : "white",
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px",
-      cursor: "pointer",
-      // pseudo selector using Radium 
-      ':hover' : {
-        backgroundColor : "lightgreen",
-        color : "black"
-      }
-    };
+    // const style ={
+
+    // }
 
     let persons = null;
     if (this.state.showPersons) {
@@ -163,12 +171,12 @@ class App extends Component {
         </div>
       );
       // when click button then change the button color
-      style.backgroundColor = "red";
-      // pseudo selector using Radium 
-      style[':hover'] = {
-        backgroundColor : "lightgrey",
-        color : "black"
-      }
+      // style.backgroundColor = "red";
+      // // pseudo selector using Radium 
+      // style[':hover'] = {
+      //   backgroundColor : "lightgrey",
+      //   color : "black"
+      // }
     }
 
     // dynamic css class 
@@ -187,9 +195,9 @@ class App extends Component {
       <div className="App">
         <h1>Hi, I'm react App.</h1>
         <p className={classes.join(' ')}>How was the day!</p>
-        <button style={style} onClick={this.taggleNameHandler}>
+        <StyledButton alt={this.state.showPersons} onClick={this.taggleNameHandler}>
           Switch Name
-        </button>
+        </StyledButton>
         {persons}  
       </div>
       // </StyleRoot>
@@ -197,8 +205,8 @@ class App extends Component {
   }
 }
 
-export default Radium(App);
-// export default App;
+// export default Radium(App);
+export default App;
 
 
 
