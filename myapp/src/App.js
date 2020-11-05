@@ -183,6 +183,7 @@ class App extends Component {
     }
 
     return (
+      // <StyleRoot>
       <div className="App">
         <h1>Hi, I'm react App.</h1>
         <p className={classes.join(' ')}>How was the day!</p>
@@ -191,6 +192,7 @@ class App extends Component {
         </button>
         {persons}  
       </div>
+      // </StyleRoot>
     );
   }
 }
