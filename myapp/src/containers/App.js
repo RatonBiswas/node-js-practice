@@ -86,7 +86,7 @@ import styled from 'styled-components'
 
 
 import "./App.css";
-import Person from "./Person/Person";
+import Persons from '../components/Persons/Persons';
 
 
 const StyledButton = styled.button`
@@ -113,9 +113,10 @@ class App extends Component {
     otherStates: "some other state",
     showPersons: false,
   };
+
   nameChangedHandler = (event,id) => {
     const personIndex = this.state.persons.findIndex(p=>{
-      return p.id ===id
+      return p.userid === id
     })
     const person ={
       // spread operator
@@ -153,21 +154,23 @@ class App extends Component {
   };
 
   render() {
-    // const style ={
-
-    // }
 
     let persons = null;
     if (this.state.showPersons) {
       persons = (
         <div>
-          {this.state.persons.map((person,index) =>{
+          {/* {this.state.persons.map((person,index) =>{
             // Each child in a list should have a unique "key" prop 
             return <Person key={person.id} name={person.name} age={person.age} 
             click={()=> this.deleteHandler(index)}
             changed={(event)=>this.nameChangedHandler(event,person.id)}/>
           })}
-          
+           */}
+           <Persons 
+           persons={this.state.persons}
+           clicked={this.deleteHandler}
+           changed={this.nameChangedHandler}
+           />
         </div>
       );
       // when click button then change the button color
